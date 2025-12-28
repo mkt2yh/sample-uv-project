@@ -50,13 +50,16 @@ uv remove <package>
 ```
 
 ```sh
-python -m src.calc.main "4 + 4"
+# Preferred: run via installed CLI entrypoint or module path
+calc "4 + 4"
+# Or when running as a module (package import path 'calc')
+python -m calc.main "4 + 4"
 ```
 
 Or, pass arguments separately:
 
 ```sh
-python -m src.calc.main 4 + 4
+python -m calc.main 4 + 4  # quoting recommended
 ```
 
 For detailed development and execution guidelines, see [Development Guide](doc/development.md).
@@ -128,11 +131,6 @@ python -m uvicorn calc.main:app --reload
 ```bash
 pytest -q
 ```
-
-Benefits of using uvx:
-- No need to clone the repository locally
-- uvx automatically handles dependency resolution and builds the project according to pyproject.toml
-- Easy version management through Git tags/branches
 
 ### Example Output
 

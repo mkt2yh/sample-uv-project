@@ -25,27 +25,29 @@ jobs:
         run: |
           python -m pip install --upgrade pip
 
+      - name: Setup uvx
+        uses: astral-sh/setup-uv@v4
+
       - name: Install project and test deps
         run: |
           python -m pip install --upgrade pip setuptools wheel hatchling
           python -m pip install -e .
-          python -m pip install ruff mypy bandit pip-audit codespell
           python -m pip install pytest
 
-      - name: Lint (ruff)
-        run: ruff check .
+      - name: Lint (ruff) via uvx
+        run: uvx ruff check .
 
-      - name: Type-check (mypy)
-        run: mypy . || true
+      - name: Type-check (mypy) via uvx
+        run: uvx mypy . || true
 
-      - name: Security scan (bandit)
-        run: bandit -r src || true
+      - name: Security scan (bandit) via uvx
+        run: uvx bandit -r src || true
 
-      - name: Dependency audit (pip-audit)
-        run: pip-audit --progress spinner || true
+      - name: Dependency audit (pip-audit) via uvx
+        run: uvx pip-audit --progress spinner || true
 
-      - name: Spelling check (codespell)
-        run: codespell . || true
+      - name: Spelling check (codespell) via uvx
+        run: uvx codespell . || true
 
       - name: Run tests
         run: pytest -q

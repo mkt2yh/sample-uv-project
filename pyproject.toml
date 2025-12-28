@@ -18,6 +18,19 @@ tools = ["codespell>=2.2.0"]
 
 [tool.ruff]
 line-length = 100
+# Ruff common project-wide settings
+# - target-version: which Python version Ruff should assume (adjust if needed)
+# - select: rule groups to enable (E=pycodestyle errors, F=pyflakes, W=pycodestyle warnings,
+#           C90=complexity checks, B=bugbear, I=isort, D=docstring checks)
+# - extend-ignore: ignore rules commonly conflicting with some formatter/style choices
+# - per-file-ignores: allow specific ignores for files like __init__.py
+# - exclude: typical directories to skip
+# These are standard sensible defaults; modify as your project's conventions require.
+target-version = "py312"
+select = ["E", "F", "W", "C90", "B", "I", "D"]
+extend-ignore = ["E203", "W503"]
+per-file-ignores = { "__init__.py" = ["F401"] }
+exclude = [".venv", "__pycache__", "build", "dist"]
 
 [tool.mypy]
 python_version = "3.13"
