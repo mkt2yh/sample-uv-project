@@ -28,7 +28,7 @@ line-length = 100
 # These are standard sensible defaults; modify as your project's conventions require.
 target-version = "py312"
 select = ["E", "F", "W", "C90", "B", "I", "D"]
-extend-ignore = ["E203", "W503"]
+extend-ignore = ["E203"]
 per-file-ignores = { "__init__.py" = ["F401"] }
 exclude = [".venv", "__pycache__", "build", "dist"]
 
@@ -38,6 +38,11 @@ strict = true
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
+
+[tool.pydocstyle]
+convention = "google"
+match-dir = "src"
+# ignore = ["D401"]  # 必要ならコメント解除して使えるようにする（ここでは追加のみ）
 
 [project.scripts]
 calc = "calc.main:main"
