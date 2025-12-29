@@ -35,7 +35,6 @@ exclude = [".venv", "__pycache__", "build", "dist"]
 [tool.mypy]
 python_version = "3.13"
 strict = true
-
 [tool.ruff.lint.pydocstyle]
 convention = "google"
 

@@ -33,7 +33,7 @@ README.md        # User documentation
 uv venv .venv
 ```
 
-2. Activate the environment:
+1. Activate the environment:
 
 ```bash
 # Windows
@@ -43,22 +43,30 @@ uv venv .venv
 source .venv/bin/activate
 ```
 
-3. Install dependencies:
+1. Install dependencies:
 
 ```bash
 uv add pytest fastapi uvicorn httpx
 ```
 
-4. Add project to workspace (editable mode):
+1. Add project to workspace (editable mode):
 
 ```bash
 uv add --dev .
 ```
 
-5. Run development server:
+1. Run development server:
 
 ```bash
 python -m uvicorn src.calc.main:app --reload
+```
+
+### Quick Windows dev shortcut
+
+If you use the bundled virtualenv and Windows, run:
+
+```bat
+.venv\Scripts\activate.bat && python -m uvicorn src.calc.main:app --reload
 ```
 
 ### Setup with pip (alternative)
@@ -69,7 +77,7 @@ python -m uvicorn src.calc.main:app --reload
 python -m venv .venv
 ```
 
-2. Activate the environment:
+1. Activate the environment:
 
 ```bash
 # Windows
@@ -79,19 +87,19 @@ python -m venv .venv
 source .venv/bin/activate
 ```
 
-3. Install dependencies:
+1. Install dependencies:
 
 ```bash
 pip install pytest fastapi uvicorn httpx
 ```
 
-4. Install project in editable mode:
+1. Install project in editable mode:
 
 ```bash
 pip install -e .
 ```
 
-5. Run development server:
+1. Run development server:
 
 ```bash
 python -m uvicorn src.calc.main:app --reload
@@ -175,6 +183,28 @@ uv outdated
 1. Create and activate venv: `python -m venv .venv` -> `.venv\Scripts\activate.bat`
 2. Install dev deps: `pip install -e .[dev]` or `pip install -e .` and then `pip install uvicorn fastapi httpx`.
 3. Start server with uvicorn as shown above.
+
+## CI: Build wheel on tag
+
+This repository includes a GitHub Actions workflow that builds a wheel and creates a Release when a Git tag starting with `v` (e.g. `v1.2.0`) is pushed.
+
+To create a release that includes the built wheel from CI:
+
+1. Create a signed tag locally (optional but recommended):
+
+```bash
+git tag -s v1.0.0 -m "Release v1.0.0"
+git push origin v1.0.0
+```
+
+1. Alternatively, create an unsigned tag and push:
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+1. After pushing, GitHub Actions will run the `Build Wheel on Tag` workflow and attach the generated wheel to a Release.
 
 ## Error Handling
 

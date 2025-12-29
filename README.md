@@ -126,6 +126,14 @@ pre-commit install
 python -m uvicorn calc.main:app --reload
 ```
 
+## Quick start (Windows)
+
+Activate the bundled virtual environment and start the development server:
+
+```bat
+.venv\Scripts\activate.bat && python -m uvicorn src.calc.main:app --reload
+```
+
 4. Run tests:
 
 ```bash

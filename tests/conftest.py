@@ -1,3 +1,9 @@
+"""Pytest configuration for sample-uv-project tests.
+
+This module ensures the project's src/ directory is on sys.path so tests
+can import the local package under test.
+"""
+
 import sys
 from pathlib import Path
 
