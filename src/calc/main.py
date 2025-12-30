@@ -14,7 +14,7 @@ from fastapi import FastAPI
 _def_app = FastAPI()
 
 
-def app():
+def app() -> FastAPI:
     """Return ASGI application instance for uvx serve compatibility."""
     return _def_app
 
