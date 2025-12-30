@@ -50,14 +50,16 @@ uv remove <package>
 ```sh
 # Preferred: run via installed CLI entrypoint or module path
 calc "4 + 4"
-# Or when running as a module (package import path 'calc')
-python -m calc.main "4 + 4"
+# Or when running as a module (explicit package path)
+python -m src.calc.main "4 + 4"
 ```
+
+Note: The installed CLI entrypoint `calc` is provided when the package is installed (console_scripts); running the package with `python -m src.calc.main` invokes the module directly and may work without installation but requires the package to be discoverable on PYTHONPATH or installed in editable mode.
 
 Or, pass arguments separately:
 
 ```sh
-python -m calc.main 4 + 4  # quoting recommended
+python -m src.calc.main 4 + 4  # quoting recommended
 ```
 
 For detailed development and execution guidelines, see [Development Guide](doc/development.md).
@@ -112,7 +114,7 @@ source .venv/bin/activate
 
 ```bash
 python -m pip install --upgrade pip
-python -m pip install -e .[lint,security,tools]
+python -m pip install -e .[dev]
 python -m pip install pre-commit
 pre-commit install
 ```
@@ -121,7 +123,7 @@ pre-commit install
 
 ```bash
 # Start uvicorn serving the FastAPI app
-python -m uvicorn calc.main:app --reload
+python -m uvicorn src.calc.main:app --reload
 ```
 
 ## Quick start (Windows)

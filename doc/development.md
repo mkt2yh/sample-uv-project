@@ -96,7 +96,7 @@ pip install pytest fastapi uvicorn httpx
 1. Install project in editable mode:
 
 ```bash
-pip install -e .
+python -m pip install -e .[dev]
 ```
 
 1. Run development server:
@@ -136,7 +136,7 @@ python -m uvicorn src.calc.main:app --reload --host 127.0.0.1 --port 8000
 ### Run with uvx
 
 ```bash
-uvx --from .venv run src.calc.main:app --reload --host 127.0.0.1 --port 8000
+uvx --from git+https://github.com/USERNAME/sample-uv-project@main serve
 ```
 
 Note: uvx is a wrapper around external uv tools and depends on the environment; it may require the project to be installed in the venv or be discoverable on PYTHONPATH. If you see ModuleNotFoundError for your package, perform an editable install (`pip install -e .`) inside the venv.
@@ -234,6 +234,8 @@ For production deployment, consider:
 - Setting up proper logging and monitoring
 - Implementing rate limiting and security headers
 - Using environment variables for configuration
+
+`serve = "src.calc.main:app"`
 
 ## Contributing
 

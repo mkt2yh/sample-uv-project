@@ -30,3 +30,19 @@ repos:
       - id: markdownlint
         args: ["--fix"]
         additional_dependencies: []
+  - repo: https://github.com/PyCQA/pydocstyle
+    rev: "6.3.0"
+    hooks:
+      - id: pydocstyle
+        args: ["--convention=google"]
+        additional_dependencies: ["pydocstyle"]
+  - repo: local
+    hooks:
+      - id: pip-audit
+        name: pip-audit
+        entry: python -m pip_audit
+        language: python
+        types: [python]
+        additional_dependencies: ["pip-audit"]
+        args: ["--progress-spinner", "off"]
+        pass_filenames: false
