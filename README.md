@@ -13,8 +13,6 @@ A simple command-line calculator implemented in Python. Supports basic arithmeti
 
 ## Usage
 
-
-
 ## Dependency Version Management
 
 This project uses uv for dependency management. The dependency versions are specified in `pyproject.toml`:
@@ -71,7 +69,6 @@ Important notes
 - Ensure dependencies for testing FastAPI (httpx) and running (uvicorn, fastapi) are installed in the venv.
 - `pyproject.toml` exposes a `serve` script (serve = "src.calc.main:app").
 
-
 For detailed development guidelines, see [Development Guide](doc/development.md).
 
 ## Run from GitHub repository with uvx
@@ -92,6 +89,7 @@ uvx --from git+ssh://git@github.com/USERNAME/private-repo@main serve
 ```
 
 Prerequisites:
+
 - uvx must be installed on the user's machine
 - The repository must contain a valid `pyproject.toml` with the `serve` script entry (it does)
 - All runtime dependencies (fastapi, uvicorn) must be listed in `pyproject.toml` (they are)

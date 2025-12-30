@@ -3,7 +3,8 @@ repos:
     rev: "v0.14.10"
     hooks:
       - id: ruff
-        args: ["--fix", "--select", "D"]
+        # Common ruff options: fixable checks, typical selects, docstring rules and line length
+        args: ["--fix", "--select", "E,F,W,B,I", "--extend-select", "D", "--line-length", "100"]
         additional_dependencies: ["ruff==0.14.10"]
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: "v1.8.0"
@@ -23,3 +24,9 @@ repos:
           - "tests"
         stages: [commit]
         pass_filenames: false
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: "v0.34.0"
+    hooks:
+      - id: markdownlint
+        args: ["--fix"]
+        additional_dependencies: []
