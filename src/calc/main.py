@@ -10,11 +10,16 @@ from typing import List, Optional
 
 from fastapi import FastAPI
 
-# ASGI app for uvx
-app = FastAPI()
+# ASGI app factory for uvx: expose callable `app()` that returns ASGI app instance
+_def_app = FastAPI()
 
 
-@app.get("/")  # type: ignore[misc]
+def app():
+    """Return ASGI application instance for uvx serve compatibility."""
+    return _def_app
+
+
+@_def_app.get("/")  # type: ignore[misc]
 def root() -> dict[str, bool]:
     """Health-check endpoint.
 
