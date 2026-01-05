@@ -114,6 +114,26 @@ def _eval_unaryop(n: ast.UnaryOp) -> float:
     raise ValueError("Unsupported unary operator")
 
 
+# --- Safety checking helpers moved to module scope to reduce nested complexity ---
+def _is_safe(node: ast.AST) -> bool:
+    """Return True if AST node only contains safe arithmetic constructs.
+
+    Split into small checks so evaluate_expression remains simple and the
+    cyclomatic complexity is distributed across helpers.
+    """
+    if isinstance(node, ast.Expression):
+        return _is_safe(node.body)
+    if isinstance(node, ast.BinOp):
+        return _is_safe(node.left) and _is_safe(node.right)
+    if isinstance(node, ast.UnaryOp):
+        return _is_safe(node.operand)
+    if isinstance(node, ast.Constant):
+        return isinstance(node.value, (int, float))
+    if isinstance(node, ast.Num):
+        return isinstance(node.n, (int, float))
+    return False
+
+
 def evaluate_expression(expr: str) -> float:
     """Safely evaluate arithmetic expression using a custom AST evaluator.
 
@@ -123,36 +143,7 @@ def evaluate_expression(expr: str) -> float:
     try:
         node = ast.parse(expr, mode="eval")
 
-        # Quick structural safety check
-        def _is_safe(n: ast.AST) -> bool:
-            # mypy: narrow union types explicitly
-            return _is_safe_impl(n)
-
-        def _is_safe_impl(n: ast.AST) -> bool:
-            if isinstance(n, ast.Expression):
-                return _is_safe_impl(n.body)
-            if isinstance(n, ast.BinOp):
-                return _is_safe_impl(n.left) and _is_safe_impl(n.right)
-            if isinstance(n, ast.UnaryOp):
-                return _is_safe_impl(n.operand)
-            if isinstance(n, ast.Constant):
-                return isinstance(n.value, (int, float))
-            if isinstance(n, ast.Num):
-                return isinstance(n.n, (int, float))
-            return False
-
-            if isinstance(n, ast.Expression):
-                return _is_safe(n.body)
-            if isinstance(n, ast.BinOp):
-                return _is_safe(n.left) and _is_safe(n.right)
-            if isinstance(n, ast.UnaryOp):
-                return _is_safe(n.operand)
-            if isinstance(n, ast.Constant):
-                return isinstance(n.value, (int, float))
-            if isinstance(n, ast.Num):
-                return isinstance(n.n, (int, float))
-            return False
-
+        # Quick structural safety check delegated to module-level helper
         if not _is_safe(node):
             raise ValueError("Invalid expression structure")
 
