@@ -27,7 +27,7 @@ line-length = 100
 # - exclude: typical directories to skip
 # These are standard sensible defaults; modify as your project's conventions require.
 target-version = "py312"
-select = ["E", "F", "W", "C90", "B", "I", "D"]
+select = ["E", "F", "W", "C90", "B", "I", "D", "PL]
 extend-ignore = ["E203"]
 per-file-ignores = { "__init__.py" = ["F401"] }
 exclude = [".venv", "__pycache__", "build", "dist"]
