@@ -37,8 +37,8 @@ jobs:
       - name: Lint (ruff) via uvx
         run: uvx ruff check .
 
-      - name: Type-check (mypy) via uvx
-        run: uvx mypy . || true
+      - name: Type-check (ty) via uvx
+        run: uvx ty check . || true
 
       - name: Security scan (bandit) via uvx
         run: uvx bandit -r src || true

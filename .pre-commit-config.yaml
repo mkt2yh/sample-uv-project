@@ -6,11 +6,6 @@ repos:
         # Common ruff options: fixable checks, typical selects, docstring rules and line length
         args: ["--fix", "--select", "E,F,W,B,I", "--extend-select", "D", "--line-length", "100"]
         additional_dependencies: ["ruff==0.14.10"]
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: "v1.8.0"
-    hooks:
-      - id: mypy
-        args: ["--ignore-missing-imports"]
   - repo: https://github.com/PyCQA/bandit
     rev: "1.8.5"
     hooks:
@@ -38,11 +33,9 @@ repos:
         additional_dependencies: ["pydocstyle"]
   - repo: local
     hooks:
-      - id: pip-audit
-        name: pip-audit
-        entry: python -m pip_audit
-        language: python
-        types: [python]
-        additional_dependencies: ["pip-audit"]
-        args: ["--progress-spinner", "off"]
+      - id: ty
+        name: ty check
+        entry: uvx ty check .
+        language: system
         pass_filenames: false
+        types_or: [python]

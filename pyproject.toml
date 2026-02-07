@@ -12,7 +12,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-lint = ["ruff>=0.18.0", "mypy>=1.8.0"]
+lint = ["ruff>=0.18.0"]
 security = ["bandit>=1.8.5", "pip-audit>=2.3.0"]
 tools = ["codespell>=2.2.0"]
 
@@ -27,14 +27,11 @@ line-length = 100
 # - exclude: typical directories to skip
 # These are standard sensible defaults; modify as your project's conventions require.
 target-version = "py312"
-select = ["E", "F", "W", "C90", "B", "I", "D", "PL]
+select = ["E", "F", "W", "C90", "B", "I", "D", "PL"]
 extend-ignore = ["E203"]
 per-file-ignores = { "__init__.py" = ["F401"] }
 exclude = [".venv", "__pycache__", "build", "dist"]
 
-[tool.mypy]
-python_version = "3.13"
-strict = true
 [tool.ruff.lint.pydocstyle]
 convention = "google"
 
