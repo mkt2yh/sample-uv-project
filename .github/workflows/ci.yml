@@ -32,7 +32,9 @@ jobs:
         run: |
           python -m pip install --upgrade pip setuptools wheel hatchling
           python -m pip install -e .
-          python -m pip install pytest
+          python -m pip install pytest pre-commit
+          # Run pre-commit hooks across the repository to ensure consistency
+          pre-commit run --all-files
 
       - name: Lint (ruff) via uvx
         run: uvx ruff check .

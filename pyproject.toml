@@ -3,7 +3,7 @@ name = "sample-uv-project"
 version = "0.1.0"
 description = "Command-line calculator tool"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.12"
 dependencies = [
     "pytest>=8.0.0",
     "fastapi>=0.95.0",
@@ -54,7 +54,8 @@ scripts = [
 
 [tool.hatch.build.targets.wheel]
 # Explicitly include the package located under src/calc for wheel builds
-packages = ["src/calc"]
+# Use package discovery-style path for hatch: the package name, not filesystem path
+packages = ["calc"]
 
 [build-system]
 requires = ["hatchling>=1.11.0"]
