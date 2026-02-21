@@ -22,43 +22,21 @@ README.md        # User documentation
 ### Prerequisites
 
 - Python 3.12 or higher
-- uv (recommended) or pip
+- uv
 - Git
 
-### Setup with uv (recommended)
+### Setup with uv
 
-1. Create a virtual environment:
+1. Sync dependencies and create the venv from `pyproject.toml`:
 
 ```bash
-uv venv .venv
+uv sync
 ```
 
-1. Activate the environment:
+2. Run development server:
 
 ```bash
-# Windows
-.venv\Scripts\activate.bat
-
-# POSIX
-source .venv/bin/activate
-```
-
-1. Install dependencies:
-
-```bash
-uv add pytest fastapi uvicorn httpx
-```
-
-1. Add project to workspace (editable mode):
-
-```bash
-uv add --dev .
-```
-
-1. Run development server:
-
-```bash
-python -m uvicorn src.calc.main:app --reload
+uv run -m uvicorn calc.main:app --reload
 ```
 
 ### Quick Windows dev shortcut
@@ -69,46 +47,14 @@ If you use the bundled virtualenv and Windows, run:
 .venv\Scripts\activate.bat && python -m uvicorn src.calc.main:app --reload
 ```
 
-### Setup with pip (alternative)
+### Notes
 
-1. Create a virtual environment:
-
-```bash
-python -m venv .venv
-```
-
-1. Activate the environment:
-
-```bash
-# Windows
-.venv\Scripts\activate.bat
-
-# POSIX
-source .venv/bin/activate
-```
-
-1. Install dependencies:
-
-```bash
-pip install pytest fastapi uvicorn httpx
-```
-
-1. Install project in editable mode:
-
-```bash
-python -m pip install -e .[dev]
-```
-
-1. Run development server:
-
-```bash
-python -m uvicorn src.calc.main:app --reload
-```
+This project uses uv for all dependency management and execution.
 
 ## Running Tests
 
 ```bash
-python -m pytest tests/ -v
+uv run -m pytest tests/ -v
 ```
 
 ## Building and Running
@@ -116,13 +62,13 @@ python -m pytest tests/ -v
 ### Run as CLI
 
 ```bash
-python -m src.calc.main "4 + 4"
+uv run calc "4 + 4"
 ```
 
 Or, pass arguments separately:
 
 ```bash
-python -m src.calc.main 4 + 4
+uv run -m calc.main 4 + 4
 ```
 
 ### Run as ASGI app (development)
@@ -130,7 +76,7 @@ python -m src.calc.main 4 + 4
 Use uvicorn (recommended for local development):
 
 ```bash
-python -m uvicorn src.calc.main:app --reload --host 127.0.0.1 --port 8000
+uv run -m uvicorn calc.main:app --reload --host 127.0.0.1 --port 8000
 ```
 
 ### Run with uvx
@@ -139,15 +85,13 @@ python -m uvicorn src.calc.main:app --reload --host 127.0.0.1 --port 8000
 uvx --from git+https://github.com/USERNAME/sample-uv-project@main serve
 ```
 
-Note: uvx is a wrapper around external uv tools and depends on the environment; it may require the project to be installed in the venv or be discoverable on PYTHONPATH. If you see ModuleNotFoundError for your package, perform an editable install (`pip install -e .`) inside the venv.
+Note: `uvx` runs tools in ephemeral environments. Prefer `uv run` when executing project code.
 
-### Run via pipx
+### Run via uvx (from repo)
 
 ```bash
-python -m pipx run --spec sample-uv-project serve
+uvx --from git+https://github.com/USERNAME/sample-uv-project@main serve
 ```
-
-Note: This requires the package to be published to an index or be accessible by pipx --spec. Local-only projects are not directly runnable with pipx unless published or served from a local file index.
 
 ## Dependency Management
 
@@ -180,9 +124,10 @@ uv outdated
 
 ## Recommended Workflow
 
-1. Create and activate venv: `python -m venv .venv` -> `.venv\Scripts\activate.bat`
-2. Install dev deps: `pip install -e .[dev]` or `pip install -e .` and then `pip install uvicorn fastapi httpx`.
-3. Start server with uvicorn as shown above.
+1. Sync dependencies: `uv sync`
+2. Run checks: `uvx pre-commit run --all-files`, `uvx ruff check .`
+3. Run tests: `uv run -m pytest`
+4. Start server: `uv run -m uvicorn calc.main:app --reload`
 
 ## CI: Build wheel on tag
 
@@ -235,7 +180,7 @@ For production deployment, consider:
 - Implementing rate limiting and security headers
 - Using environment variables for configuration
 
-`serve = "src.calc.main:app"`
+`serve = "calc.main:app"`
 
 ## Contributing
 

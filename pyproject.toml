@@ -12,7 +12,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-lint = ["ruff>=0.18.0"]
+lint = ["ruff>=0.15.1"]
 security = ["bandit>=1.8.5", "pip-audit>=2.3.0"]
 tools = ["codespell>=2.2.0"]
 

@@ -16,25 +16,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v4
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Install system deps
+      - name: Sync dependencies with uv
         run: |
-          python -m pip install --upgrade pip
-
-      - name: Setup uvx
-        uses: astral-sh/setup-uv@v4
-
-      - name: Install project and test deps
-        run: |
-          python -m pip install --upgrade pip setuptools wheel hatchling
-          python -m pip install -e .
-          python -m pip install pytest pre-commit
+          uv sync
           # Run pre-commit hooks across the repository to ensure consistency
-          pre-commit run --all-files
+          uvx pre-commit run --all-files
 
       - name: Lint (ruff) via uvx
         run: uvx ruff check .
@@ -52,4 +43,4 @@ jobs:
         run: uvx codespell . || true
 
       - name: Run tests
-        run: pytest -q
+        run: uv run -m pytest -q

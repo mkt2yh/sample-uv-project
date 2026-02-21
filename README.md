@@ -48,23 +48,19 @@ uv remove <package>
 ```
 
 ```sh
-# Preferred: run via installed CLI entrypoint or module path
-calc "4 + 4"
-# Or when running as a module (explicit package path)
-python -m src.calc.main "4 + 4"
-```
+# Preferred: run via uv (uses the synced venv)
+uv run calc "4 + 4"
 
-Note: The installed CLI entrypoint `calc` is provided when the package is installed (console_scripts); running the package with `python -m src.calc.main` invokes the module directly and may work without installation but requires the package to be discoverable on PYTHONPATH or installed in editable mode.
+# Or run the module directly
+uv run -m calc.main "4 + 4"
 
-Or, pass arguments separately:
-
-```sh
-python -m src.calc.main 4 + 4  # quoting recommended
+# Passing args separately (quote recommended)
+uv run -m calc.main 4 + 4
 ```
 
 For detailed development and execution guidelines, see [Development Guide](doc/development.md).
 
-Note: uvx is a wrapper around external uv tools and depends on the environment; it may require the project to be installed in the venv or be discoverable on PYTHONPATH. If you see ModuleNotFoundError for your package, perform an editable install (`pip install -e .`) inside the venv.
+Note: `uvx` runs tools in ephemeral environments. For project code, prefer `uv run` which uses the project's synced virtual environment.
 
 Important notes
 
@@ -98,46 +94,38 @@ Prerequisites:
 
 Notes for developers (local development)
 
-1. Create and activate a virtual environment:
+1. Sync dependencies and create venv:
 
 ```bash
-python -m venv .venv
-# Windows (cmd.exe)
-.venv\Scripts\activate.bat
-# PowerShell
-.venv\Scripts\Activate.ps1
-# POSIX
-source .venv/bin/activate
+uv sync
 ```
 
-2. Install the project in editable mode and dev tools:
+2. Run pre-commit hooks:
 
 ```bash
-python -m pip install --upgrade pip
-python -m pip install -e .[dev]
-python -m pip install pre-commit
-pre-commit install
+uvx pre-commit run --all-files
 ```
 
 3. Start the server locally:
 
 ```bash
 # Start uvicorn serving the FastAPI app
-python -m uvicorn src.calc.main:app --reload
+uv run -m uvicorn calc.main:app --reload
 ```
 
 ## Quick start (Windows)
 
-Activate the bundled virtual environment and start the development server:
+Quickly start with uv on Windows:
 
-```bat
-.venv\Scripts\activate.bat && python -m uvicorn src.calc.main:app --reload
+```powershell
+uv sync
+uv run -m uvicorn calc.main:app --reload
 ```
 
 4. Run tests:
 
 ```bash
-pytest -q
+uv run -m pytest -q
 ```
 
 ### Example Output
@@ -156,8 +144,8 @@ Error: Invalid characters in expression
 
 ## File Structure
 
-- [`src/calc/main.py`](src/calc/main.py): Core logic and CLI
-- [`tests/test_calc.py`](tests/test_calc.py): Unit tests
+- [src/calc/main.py](src/calc/main.py): Core logic and CLI
+- [tests/test_calc.py](tests/test_calc.py): Unit tests
 
 ## Requirements
 
