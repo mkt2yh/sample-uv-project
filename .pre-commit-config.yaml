@@ -3,6 +3,7 @@ repos:
     rev: "v0.15.0"
     hooks:
       - id: ruff
+        name: ruff
         # Common ruff options: fixable checks, typical selects, docstring rules and line length
         args: ["--fix", "--select", "E,F,W,B,I", "--extend-select", "D", "--line-length", "100"]
         additional_dependencies: ["ruff==0.15.0"]
