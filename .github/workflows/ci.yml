@@ -29,19 +29,29 @@ jobs:
           uv run pre-commit run --all-files
 
       - name: Lint (ruff) via uv
-        run: uv ruff check .
+        run: |
+          uv pip install --upgrade ruff
+          uv run ruff check .
 
       - name: Type-check (ty) via uv
-        run: uv ty check . || true
+        run: |
+          uv pip install --upgrade ty
+          uv run ty check . || true
 
       - name: Security scan (bandit) via uv
-        run: uv bandit -r src || true
+        run: |
+          uv pip install --upgrade bandit
+          uv run bandit -r src || true
 
       - name: Dependency audit (pip-audit) via uv
-        run: uv pip-audit --progress spinner || true
+        run: |
+          uv pip install --upgrade pip-audit
+          uv run pip-audit --progress spinner || true
 
       - name: Spelling check (codespell) via uv
-        run: uv codespell . || true
+        run: |
+          uv pip install --upgrade codespell
+          uv run codespell . || true
 
       - name: Run tests
         run: uv run -m pytest -q
