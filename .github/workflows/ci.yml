@@ -25,22 +25,22 @@ jobs:
         run: |
           uv sync
           # Run pre-commit hooks across the repository to ensure consistency
-          uvx pre-commit run --all-files
+          uv pre-commit run --all-files
 
-      - name: Lint (ruff) via uvx
-        run: uvx ruff check .
+      - name: Lint (ruff) via uv
+        run: uv ruff check .
 
-      - name: Type-check (ty) via uvx
-        run: uvx ty check . || true
+      - name: Type-check (ty) via uv
+        run: uv ty check . || true
 
-      - name: Security scan (bandit) via uvx
-        run: uvx bandit -r src || true
+      - name: Security scan (bandit) via uv
+        run: uv bandit -r src || true
 
-      - name: Dependency audit (pip-audit) via uvx
-        run: uvx pip-audit --progress spinner || true
+      - name: Dependency audit (pip-audit) via uv
+        run: uv pip-audit --progress spinner || true
 
-      - name: Spelling check (codespell) via uvx
-        run: uvx codespell . || true
+      - name: Spelling check (codespell) via uv
+        run: uv codespell . || true
 
       - name: Run tests
         run: uv run -m pytest -q
