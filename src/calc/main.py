@@ -87,21 +87,23 @@ def _eval_binop(n: ast.BinOp) -> float:
     right: float = _eval_ast_node(n.right)
 
     if isinstance(n.op, ast.Add):
-        return left + right
-    if isinstance(n.op, ast.Sub):
-        return left - right
-    if isinstance(n.op, ast.Mult):
-        return float(left * right)
-    if isinstance(n.op, ast.Div):
-        return float(left / right)
-    if isinstance(n.op, ast.Pow):
-        return float(left ** right)
-    if isinstance(n.op, ast.Mod):
-        return left % right
-    if isinstance(n.op, ast.FloorDiv):
-        return left // right
+        result = left + right
+    elif isinstance(n.op, ast.Sub):
+        result = left - right
+    elif isinstance(n.op, ast.Mult):
+        result = float(left * right)
+    elif isinstance(n.op, ast.Div):
+        result = float(left / right)
+    elif isinstance(n.op, ast.Pow):
+        result = float(left ** right)
+    elif isinstance(n.op, ast.Mod):
+        result = left % right
+    elif isinstance(n.op, ast.FloorDiv):
+        result = left // right
+    else:
+        raise ValueError("Unsupported binary operator")
 
-    raise ValueError("Unsupported binary operator")
+    return result
 
 
 def _eval_unaryop(n: ast.UnaryOp) -> float:

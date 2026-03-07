@@ -3,9 +3,15 @@
 These tests exercise parsing and evaluation helpers in src/calc/main.py.
 """
 
+import sys
+
 import pytest
 
 from calc.main import evaluate_expression, main, parse_expression
+
+EXPECTED_SUM = 8.0
+EXPECTED_PRODUCT = 16.0
+EXPECTED_DIVISION = 2.0
 
 
 def test_parse_expression_basic() -> None:
@@ -41,25 +47,25 @@ def test_parse_expression_unbalanced_parentheses() -> None:
 def test_evaluate_expression_basic() -> None:
     """Test basic arithmetic evaluation."""
     result = evaluate_expression("4+4")
-    assert result == 8.0
+    assert result == EXPECTED_SUM
 
 
 def test_evaluate_expression_complex() -> None:
     """Test complex arithmetic expression."""
     result = evaluate_expression("(4+4)*2")
-    assert result == 16.0
+    assert result == EXPECTED_PRODUCT
 
 
 def test_evaluate_expression_with_decimals() -> None:
     """Test expression with decimal numbers."""
     result = evaluate_expression("4.5+3.5")
-    assert result == 8.0
+    assert result == EXPECTED_SUM
 
 
 def test_evaluate_expression_division() -> None:
     """Test division operation."""
     result = evaluate_expression("8/4")
-    assert result == 2.0
+    assert result == EXPECTED_DIVISION
 
 
 def test_evaluate_expression_invalid() -> None:
@@ -77,8 +83,6 @@ def test_main_no_args() -> None:
 def test_main_valid_expression() -> None:
     """Test main function with valid expression."""
     # Mock sys.argv for testing
-    import sys
-
     original_argv = sys.argv
     try:
         sys.argv = ["calc", "4", "+", "4"]
@@ -90,8 +94,6 @@ def test_main_valid_expression() -> None:
 
 def test_main_invalid_expression() -> None:
     """Test main function with invalid expression."""
-    import sys
-
     original_argv = sys.argv
     try:
         sys.argv = ["calc", "4", "+", "a"]
